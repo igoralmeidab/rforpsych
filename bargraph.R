@@ -6,25 +6,31 @@ require(ggplot2) #
 # first you need a data frame with at least three columns, "group", "mean" ,and "sd"
 data<- data.frame("group"=c("A","B"),"mean"=c(20,25),"sd"=c(1,2))
 
-#simple bar graph
+
+#before start plotting with ggplot, keep in mind that this package plots graphs in layers
+#this means that each part of the graph ( bars, error bars, significance symbols,etc) requires a line of code to be plotted
+#also, R does not understand where things should be plotted, so you have to specify where each element should be plotted, as well as with which values
+
+
+#Let's begin with a simple bar graph
 ggplot(data,aes(x=group,y=mean))+ # graph itself
   geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")
 
-#simple bar graph plus error bars
-ggplot(data,aes(x=group,y=mean))+ # graph itself
+#Adding error bars
+ggplot(data,aes(x=group,y=mean))+ 
   geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")+
 geom_errorbar(aes(x=group,ymin=mean-sd,ymax=mean+sd),position="dodge",width=0.25)
   
-#bar graph, error bar, significance with *
+#Adding significance with *
   
-ggplot(data,aes(x=group,y=mean))+ # graph itself
+ggplot(data,aes(x=group,y=mean))+ 
   geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")+
   geom_errorbar(aes(x=group,ymin=mean-sd,ymax=mean+sd),position="dodge",width=0.25)+
   annotate("text",x=1.5,y=28,label="**",size=11) # position, size and text
 
 
 #Changing some aesthetics
-ggplot(data,aes(x=group,y=mean))+ # graph itself
+ggplot(data,aes(x=group,y=mean))+ 
   geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")+
   geom_errorbar(aes(x=group,ymin=mean-sd,ymax=mean+sd),position="dodge",width=0.25)+
   annotate("text",x=1.5,y=28,label="**",size=11)+
@@ -55,8 +61,8 @@ ggplot(data1,aes(x=variable,y=mean))+ # graph itself. Data is divided by variabl
 
 
 #including some aesthetics
-ggplot(data1,aes(x=variable,y=mean))+ # graph itself. Data is divided by variable
-  geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")+ # fill is used to separate the groups 
+ggplot(data1,aes(x=variable,y=mean))+ 
+  geom_bar(aes(y=mean,fill=group),stat="identity",position="dodge")+ 
   geom_errorbar(aes(x=variable,ymin=mean-sd,ymax=mean+sd,fill=group),position=dodge,width=0.25)+
   annotate("text",x=1,y=28,label="***",size=11)+
   annotate("text",x=2,y=26,label="NS",size=5) +
